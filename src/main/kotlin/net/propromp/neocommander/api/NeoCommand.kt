@@ -7,7 +7,7 @@ import net.minecraft.commands.CommandDispatcher
 import net.minecraft.commands.CommandListenerWrapper
 import net.propromp.neocommander.api.argument.NeoArgument
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_20_R1.command.VanillaCommandWrapper
+import org.bukkit.craftbukkit.v1_20_R2.command.VanillaCommandWrapper
 
 /**
  * SpiCommand

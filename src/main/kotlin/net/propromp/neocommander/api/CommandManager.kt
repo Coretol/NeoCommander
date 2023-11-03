@@ -8,8 +8,8 @@ import net.propromp.neocommander.api.annotation.AnnotationManager
 import net.propromp.neocommander.api.util.removeCommand
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_20_R1.CraftServer
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_20_R2.CraftServer
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 
