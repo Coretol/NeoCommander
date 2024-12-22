@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.dokka") version "1.6.10"
     id("com.vanniktech.maven.publish") version "0.18.0"
+    id("fr.il_totore.manadrop") version "0.4.3"
 }
 
 repositories {
@@ -22,6 +23,10 @@ dependencies {
 tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
+    }
+
+    buildTools {
+        versions("1.21.1")
     }
 
     create<Copy>("buildPlugin") {
