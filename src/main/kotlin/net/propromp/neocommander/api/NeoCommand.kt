@@ -3,11 +3,11 @@ package net.propromp.neocommander.api
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.tree.CommandNode
-import net.minecraft.commands.CommandDispatcher
-import net.minecraft.commands.CommandListenerWrapper
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.Commands
 import net.propromp.neocommander.api.argument.NeoArgument
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_20_R1.command.VanillaCommandWrapper
+import org.bukkit.craftbukkit.v1_21_R1.command.VanillaCommandWrapper
 
 /**
  * SpiCommand
@@ -107,13 +107,14 @@ class NeoCommand(
      * @param commandNode command node
      * @return VanillaCommandWrapper
      */
+    @Suppress("UNCHECKED_CAST")
     fun getVanillaCommandWrapper(
         minecraftDispatcher: Any,
         commandNode: CommandNode<Any>
     ): Command {
         val wrapper = VanillaCommandWrapper(
-            minecraftDispatcher as CommandDispatcher,
-            commandNode as CommandNode<CommandListenerWrapper>
+            minecraftDispatcher as Commands,
+            commandNode as CommandNode<CommandSourceStack>
         ).apply {
             label = name
             description = description

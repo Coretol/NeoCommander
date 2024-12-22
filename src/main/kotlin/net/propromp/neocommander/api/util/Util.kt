@@ -5,6 +5,7 @@ import com.mojang.brigadier.tree.CommandNode
 import com.mojang.brigadier.tree.LiteralCommandNode
 
 
+@Suppress("UNCHECKED_CAST")
 fun <S> CommandNode<S>.removeCommand(name: String) {
     val children = this::class.java.getField("children").apply {
         isAccessible = true
