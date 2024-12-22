@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "2.0.21"
     id("org.jetbrains.dokka") version "2.0.0"
     id("io.papermc.paperweight.userdev") version "1.7.7"
+    `maven-publish`
 }
 
 repositories {
@@ -21,6 +22,7 @@ dependencies {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks {
