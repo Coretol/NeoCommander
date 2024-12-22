@@ -7,8 +7,8 @@ import net.propromp.neocommander.api.annotation.AnnotationManager
 import net.propromp.neocommander.api.util.removeCommand
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_21_R1.CraftServer
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.CraftServer
+import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 
@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin
  */
 class CommandManager(val plugin: Plugin) {
     val annotationManager = AnnotationManager(this)
-    private val minecraftDispatcher = (Bukkit.getServer() as CraftServer).handle.server.vanillaCommandDispatcher
+    private val minecraftDispatcher = (Bukkit.getServer() as CraftServer).handle.server.commands
     private val brigadierDispatcher = minecraftDispatcher.dispatcher
     private val commands = mutableListOf<NeoCommand>()
 
