@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("jvm") version "2.0.21"
+    id("org.jetbrains.dokka") version "2.0.0"
     id("com.vanniktech.maven.publish") version "0.18.0"
     id("fr.il_totore.manadrop") version "0.4.3"
 }
@@ -20,9 +20,13 @@ dependencies {
     compileOnly("org.spigotmc:spigot:1.21.1-R0.1-SNAPSHOT:remapped-mojang")
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 
     buildTools {
