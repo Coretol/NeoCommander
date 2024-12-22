@@ -4,20 +4,20 @@ plugins {
     kotlin("jvm") version "2.0.21"
     id("org.jetbrains.dokka") version "2.0.0"
     id("com.vanniktech.maven.publish") version "0.18.0"
-    id("fr.il_totore.manadrop") version "0.4.3"
+    id("io.papermc.paperweight.userdev") version "1.7.7"
 }
 
 repositories {
     mavenCentral()
     mavenLocal()
+    gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://libraries.minecraft.net")
 }
 
 dependencies {
     compileOnly("com.mojang:brigadier:1.0.18")
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    compileOnly("org.spigotmc:spigot:1.21.1-R0.1-SNAPSHOT:remapped-mojang")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
 }
 
 java {
@@ -29,8 +29,8 @@ tasks {
         kotlinOptions.jvmTarget = "21"
     }
 
-    buildTools {
-        versions("1.21.1")
+    assemble {
+        paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
     }
 
     create<Copy>("buildPlugin") {

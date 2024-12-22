@@ -3,7 +3,7 @@ package net.propromp.neocommander.api.argument
 import com.mojang.brigadier.arguments.ArgumentType
 import net.minecraft.commands.arguments.item.ItemInput
 import net.propromp.neocommander.api.NeoCommandContext
-import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack
+import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 
 class ItemStackArgument(name: String) : NeoArgument<Any, ItemStack>(name) {
