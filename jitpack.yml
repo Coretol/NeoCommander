@@ -1,6 +1,2 @@
 jdk:
   - openjdk21
-install:
-  - ./gradlew build
-script:
-  - ./gradlew build
