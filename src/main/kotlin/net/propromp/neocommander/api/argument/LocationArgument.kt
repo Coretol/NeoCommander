@@ -1,10 +1,10 @@
 package net.propromp.neocommander.api.argument
 
 import com.mojang.brigadier.arguments.ArgumentType
-import net.minecraft.commands.CommandListenerWrapper
-import net.minecraft.commands.arguments.coordinates.ArgumentPosition
-import net.minecraft.commands.arguments.coordinates.ArgumentVec3
-import net.minecraft.commands.arguments.coordinates.IVectorPosition
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument
+import net.minecraft.commands.arguments.coordinates.Coordinates
+import net.minecraft.commands.arguments.coordinates.Vec3Argument
 import net.propromp.neocommander.api.NeoCommandContext
 import net.propromp.neocommander.api.argument.annotation.LocationArgument
 import org.bukkit.Location
@@ -17,17 +17,17 @@ class LocationArgument(name: String, val type: LocationType = LocationType.ENTIT
     }
 
     override fun asBrigadier() = when (type) {
-        LocationType.BLOCK -> ArgumentPosition.a()
-        LocationType.ENTITY -> ArgumentVec3.a()
+        LocationType.BLOCK -> BlockPosArgument.blockPos()
+        LocationType.ENTITY -> Vec3Argument.vec3()
     } as ArgumentType<out Any>
 
     override fun parse(context: NeoCommandContext, t: Any): Location {
 
-        val vec3D = (t as IVectorPosition).a(context.context.source as CommandListenerWrapper)
+        val vec3D = (t as Coordinates).getPosition(context.context.source as CommandSourceStack)
 
-        val x = vec3D.a()
-        val y = vec3D.b()
-        val z = vec3D.c()
+        val x = vec3D.x()
+        val y = vec3D.y()
+        val z = vec3D.z()
         return Location(context.source.world, x, y, z)
     }
 }

@@ -1,15 +1,14 @@
 package net.propromp.neocommander.api
 
-import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.tree.CommandNode
-import net.minecraft.commands.CommandListenerWrapper
+import net.minecraft.commands.CommandSourceStack
 import net.propromp.neocommander.api.annotation.AnnotationManager
 import net.propromp.neocommander.api.util.removeCommand
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_20_R1.CraftServer
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_21_R1.CraftServer
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 
@@ -20,8 +19,8 @@ import org.bukkit.plugin.Plugin
  */
 class CommandManager(val plugin: Plugin) {
     val annotationManager = AnnotationManager(this)
-    private val minecraftDispatcher = (Bukkit.getServer() as CraftServer).handle.b().vanillaCommandDispatcher
-    private val brigadierDispatcher = minecraftDispatcher.a() as CommandDispatcher<CommandListenerWrapper>
+    private val minecraftDispatcher = (Bukkit.getServer() as CraftServer).handle.server.vanillaCommandDispatcher
+    private val brigadierDispatcher = minecraftDispatcher.dispatcher
     private val commands = mutableListOf<NeoCommand>()
 
 
@@ -31,15 +30,16 @@ class CommandManager(val plugin: Plugin) {
      *
      * @param neoCommand command
      */
+    @Suppress("UNCHECKED_CAST")
     fun register(neoCommand: NeoCommand) {
         // register into brigadier
         val literalArgumentBuilder = neoCommand.getLiteralArgumentBuilder()
         val commandNode =
-            brigadierDispatcher.register(literalArgumentBuilder as LiteralArgumentBuilder<CommandListenerWrapper>)
+            brigadierDispatcher.register(literalArgumentBuilder as LiteralArgumentBuilder<CommandSourceStack>)
 
         // register aliases into brigadier
         val aliasArgumentBuilders = neoCommand.getAliasLiteralArgumentBuilders(commandNode as CommandNode<Any>)
-        aliasArgumentBuilders.forEach { brigadierDispatcher.register(it as LiteralArgumentBuilder<CommandListenerWrapper>) }
+        aliasArgumentBuilders.forEach { brigadierDispatcher.register(it as LiteralArgumentBuilder<CommandSourceStack>) }
 
         // register into bukkit
         val commandMap = (Bukkit.getServer() as CraftServer).commandMap
@@ -94,7 +94,7 @@ class CommandManager(val plugin: Plugin) {
      * @param player player
      */
     fun sendCommandUpdate(player: Player) {
-        minecraftDispatcher.a((player as CraftPlayer).handle)
+        minecraftDispatcher.sendCommands((player as CraftPlayer).handle)
     }
 
     /**
