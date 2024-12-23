@@ -48,8 +48,22 @@ tasks {
         archiveClassifier.set("javadoc")
         from(javadoc, dokkaJavadoc)
     }
-    artifacts {
-        archives(sourcesJar)
-        archives(javadocJar)
+
+    jar {
+        manifest {
+            attributes["Implementation-Title"] = project.name
+            attributes["Implementation-Version"] = project.version
+        }
+        from(sourceSets["main"].output)
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+        }
     }
 }
