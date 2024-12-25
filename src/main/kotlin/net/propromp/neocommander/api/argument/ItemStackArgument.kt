@@ -1,11 +1,11 @@
 package net.propromp.neocommander.api.argument
 
 import com.mojang.brigadier.arguments.ArgumentType
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes
 import net.minecraft.commands.CommandBuildContext
 import net.minecraft.commands.arguments.item.ItemArgument
 import net.minecraft.commands.arguments.item.ItemInput
 import net.minecraft.server.MinecraftServer
+import net.minecraft.world.level.WorldDataConfiguration
 import net.minecraft.world.level.storage.WorldData
 import net.propromp.neocommander.api.NeoCommandContext
 import org.bukkit.Bukkit
@@ -15,11 +15,13 @@ import org.bukkit.inventory.ItemStack
 
 private val COMMAND_BUILDER_CONTEXT = run {
     val server = (Bukkit.getServer() as CraftServer).handle.server
-    val worldDataField = MinecraftServer::class.java.getMethod("getWorldData")
-    val worldData = worldDataField.invoke(server) as WorldData
+    val worldDataMethod = MinecraftServer::class.java.getMethod("getWorldData")
+    val worldData = worldDataMethod.invoke(server) as WorldData
+    val getDataConfigurationMethod = WorldData::class.java.getMethod("getDataConfiguration")
+    val dataConfiguration = getDataConfigurationMethod.invoke(worldData) as WorldDataConfiguration
     CommandBuildContext.simple(
         server.registryAccess(),
-        worldData.dataConfiguration.enabledFeatures()
+        dataConfiguration.enabledFeatures()
     )
 }
 
