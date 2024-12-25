@@ -5,6 +5,8 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes
 import net.minecraft.commands.CommandBuildContext
 import net.minecraft.commands.arguments.item.ItemArgument
 import net.minecraft.commands.arguments.item.ItemInput
+import net.minecraft.server.MinecraftServer
+import net.minecraft.world.level.storage.WorldData
 import net.propromp.neocommander.api.NeoCommandContext
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.CraftServer
@@ -13,9 +15,11 @@ import org.bukkit.inventory.ItemStack
 
 private val COMMAND_BUILDER_CONTEXT = run {
     val server = (Bukkit.getServer() as CraftServer).handle
+    val worldDataField = MinecraftServer::class.java.getMethod("getWorldData")
+    val worldData = worldDataField.invoke(server) as WorldData
     CommandBuildContext.simple(
         server.server.registryAccess(),
-        server.server.worldData.dataConfiguration.enabledFeatures()
+        worldData.dataConfiguration.enabledFeatures()
     )
 }
 
