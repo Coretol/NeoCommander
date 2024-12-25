@@ -14,11 +14,11 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 
 private val COMMAND_BUILDER_CONTEXT = run {
-    val server = (Bukkit.getServer() as CraftServer).handle
+    val server = (Bukkit.getServer() as CraftServer).handle.server
     val worldDataField = MinecraftServer::class.java.getMethod("getWorldData")
     val worldData = worldDataField.invoke(server) as WorldData
     CommandBuildContext.simple(
-        server.server.registryAccess(),
+        server.registryAccess(),
         worldData.dataConfiguration.enabledFeatures()
     )
 }
